@@ -1,0 +1,30 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Zored\Telegram\:
+    resource: '../../../vendor/zored/telegram/src/*'
+
+  Zored\TelegramBundle\:
+    resource: '../../*'
+    exclude: '../../{Entity,Migrations,Tests}'
+
+  Zored\TelegramBundle\Telegram\Command\MessageSender:
+    public: true
+    arguments:
+      $api: '@zored.telegram.client.api'
+
+  # Client API:
+  zored.telegram.client.config.factory:
+    class: Zored\Telegram\Madeline\Config\Builder\EnvConfigFactory
+    calls:
+    - [setType, [!php/const Zored\Telegram\Madeline\Config\Auth\AuthType::CLIENT]]
+  zored.telegram.client.api.factory:
+    class: Zored\Telegram\Factory\TelegramApiFactory
+    calls:
+    - [setConfigFactory, ['@zored.telegram.client.config.factory']]
+  zored.telegram.client.api:
+    class: Zored\Telegram\TelegramApi
+    factory: zored.telegram.client.api.factory:create

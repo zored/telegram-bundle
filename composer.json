@@ -1,0 +1,55 @@
+{
+    "name": "zored/telegram-bundle",
+    "description": "PHP Telegram API Symfony 4 bundle",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rob",
+            "email": "i@ro.gl"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "ocramius/proxy-manager": "^2.1",
+        "symfony/console": "^4.0",
+        "symfony/dependency-injection": "^4.0",
+        "symfony/dotenv": "^4.0",
+        "symfony/framework-bundle": "^4.0",
+        "symfony/http-kernel": "^4.0",
+        "zored/telegram": "^0.1.5"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Zored\\TelegramBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zored\\TelegramBundle\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.10",
+        "php-coveralls/php-coveralls": "^2.0",
+        "phpunit/phpunit": "^7.0",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/danog/phpseclib"
+        }
+    ],
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+        }
+    }
+}
