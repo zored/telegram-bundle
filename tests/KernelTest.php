@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Zored\TelegramBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function iterator_to_array;
 use Zored\TelegramBundle\Kernel;
 use Zored\TelegramBundle\ZoredTelegramBundle;
+use function iterator_to_array;
 
 final class KernelTest extends TestCase
 {
