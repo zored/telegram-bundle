@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zored\TelegramBundle;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -16,25 +18,25 @@ final class Kernel extends BaseKernel
     private const CONFIG_EXTS = '.{php,xml,yaml}';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return $this->getProjectDir() . '/var/cache/' . $this->environment;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return $this->getProjectDir() . '/var/log';
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         $contents = require $this->getProjectDir() . '/config/bundles.php';
         foreach ($contents as $class => $envs) {
@@ -45,9 +47,9 @@ final class Kernel extends BaseKernel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->addResource(new FileResource($this->getProjectDir() . '/config/bundles.php'));
         $container->setParameter('container.autowiring.strict_mode', true);
@@ -60,7 +62,7 @@ final class Kernel extends BaseKernel
         $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
         $confDir = $this->getProjectDir() . '/config';
 

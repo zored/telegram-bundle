@@ -1,6 +1,6 @@
 {
     "name": "zored/telegram-bundle",
-    "description": "PHP Telegram API Symfony 4 bundle",
+    "description": "PHP Telegram API Symfony Bundle",
     "type": "library",
     "license": "MIT",
     "authors": [

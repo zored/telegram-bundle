@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zored\TelegramBundle\Telegram\Command;
 
-use Zored\Telegram\TelegramApi;
-use Zored\TelegramBundle\Service\Client\ApiInterface;
+use Zored\Telegram\TelegramApiInterface;
 use Zored\TelegramBundle\Telegram\Command\Exception\PeerMessageSendException;
 
 final class MessageSender
 {
     /**
-     * @var TelegramApi
+     * @var TelegramApiInterface
      */
     private $api;
 
-    public function __construct(TelegramApi $api)
+    public function __construct(TelegramApiInterface $api)
     {
         $this->api = $api;
     }
@@ -41,7 +42,8 @@ final class MessageSender
         if (!$user) {
             return false;
         }
-        $this->api->sendMessage($user->getId(), $message, TelegramApi::PEER_TYPE_USER);
+        $this->api->sendMessage($user->getId(), $message, TelegramApiInterface::PEER_TYPE_USER);
+
         return true;
     }
 
@@ -51,7 +53,8 @@ final class MessageSender
         if (!$chat) {
             return false;
         }
-        $this->api->sendMessage($chat->getId(), $message, TelegramApi::PEER_TYPE_CHAT);
+        $this->api->sendMessage($chat->getId(), $message, TelegramApiInterface::PEER_TYPE_CHAT);
+
         return true;
     }
 }

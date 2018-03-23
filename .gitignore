@@ -1,6 +1,7 @@
 .env
 .idea
 .php_cs.cache
+build/
 symfony.lock
 composer.lock
 var/

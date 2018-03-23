@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zored\TelegramBundle\Console;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,7 +14,7 @@ final class SendMessage extends ConsoleCommand
     protected static $defaultName = 'telegram:client:send:message';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -22,7 +24,7 @@ final class SendMessage extends ConsoleCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

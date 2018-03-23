@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zored\TelegramBundle\Console;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -9,5 +11,4 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
  */
 abstract class ConsoleCommand extends ContainerAwareCommand
 {
-
 }
