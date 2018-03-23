@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Zored\TelegramBundle\Telegram\Command;
+namespace Zored\TelegramBundle\Tests\Telegram\Command;
 
 use PHPUnit\Framework\TestCase;
 use Zored\Telegram\Entity\Bot\Update\ShortSentMessage;
+use Zored\Telegram\Entity\Control\Message\MarkdownMessage;
+use Zored\Telegram\Entity\Control\Peer\User;
 use Zored\Telegram\Entity\Dialogs;
-use Zored\Telegram\Entity\User;
+use Zored\Telegram\Entity\User as EntityUser;
 use Zored\Telegram\TelegramApiInterface;
+use Zored\TelegramBundle\Telegram\Command\MessageSender;
 
 final class MessageSenderTest extends TestCase
 {
@@ -28,15 +31,21 @@ final class MessageSenderTest extends TestCase
             ->expects($this->once())
             ->method('getDialogs')
             ->with()
-            ->willReturn((new Dialogs())->setUsers([(new User())->setId($id = 1)->setFirstName($peer)]));
+            ->willReturn(
+                (new Dialogs())
+                    ->setUsers([
+                        (new EntityUser())
+                            ->setId($id = 1)
+                            ->setFirstName($peer),
+                    ])
+            );
 
         $this->api
             ->expects($this->once())
             ->method('sendMessage')
             ->with(
-                $id,
-                $message,
-                TelegramApiInterface::PEER_TYPE_USER
+                new User($id),
+                new MarkdownMessage($message)
             )
             ->willReturn(new ShortSentMessage());
 
