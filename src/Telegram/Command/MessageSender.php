@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Zored\TelegramBundle\Telegram\Command;
 
+use Zored\Telegram\Entity\Control\Message\MarkdownMessage;
+use Zored\Telegram\Entity\Control\Peer\PeerFactory;
 use Zored\Telegram\TelegramApiInterface;
-use Zored\TelegramBundle\Telegram\Command\Exception\PeerMessageSendException;
 
 final class MessageSender
 {
@@ -22,39 +23,12 @@ final class MessageSender
     /**
      * @throws \Zored\TelegramBundle\Telegram\Command\Exception\PeerMessageSendException
      */
-    public function send(string $peer, string $message): void
+    public function send(string $search, string $messageContent): void
     {
-        // TODO: refactor after peer separation.
-        if ($this->toUser($peer, $message)) {
-            return;
-        }
-
-        if ($this->toChat($peer, $message)) {
-            return;
-        }
-
-        throw PeerMessageSendException::becauseNoPeerFound($name);
-    }
-
-    private function toUser(string $name, string $message): bool
-    {
-        $user = $this->api->getDialogs()->findUserByFullName($name);
-        if (!$user) {
-            return false;
-        }
-        $this->api->sendMessage($user->getId(), $message, TelegramApiInterface::PEER_TYPE_USER);
-
-        return true;
-    }
-
-    private function toChat(string $title, string $message): bool
-    {
-        $chat = $this->api->getDialogs()->findChatByTitle($title);
-        if (!$chat) {
-            return false;
-        }
-        $this->api->sendMessage($chat->getId(), $message, TelegramApiInterface::PEER_TYPE_CHAT);
-
-        return true;
+        $dialogs = $this->api->getDialogs();
+        $this->api->sendMessage(PeerFactory::createByEntity(
+            $dialogs->findUserByFullName($search) ??
+            $dialogs->findChatByTitle($search)
+        ), new MarkdownMessage($messageContent));
     }
 }

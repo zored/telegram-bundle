@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Zored\TelegramBundle;
+namespace Zored\TelegramBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Zored\TelegramBundle\ZoredTelegramBundle;
 
 final class ZoredTelegramBundleTest extends TestCase
 {

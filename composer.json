@@ -17,7 +17,7 @@
         "symfony/dotenv": "^4.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/http-kernel": "^4.0",
-        "zored/telegram": "^0.1.5"
+        "zored/telegram": "^0.2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
