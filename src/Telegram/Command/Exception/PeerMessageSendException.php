@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zored\TelegramBundle\Telegram\Command\Exception;
 
 final class PeerMessageSendException extends \RuntimeException
