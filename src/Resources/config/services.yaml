@@ -11,6 +11,12 @@ services:
     resource: '../../*'
     exclude: '../../{Entity,Migrations,Tests}'
 
+  Zored\TelegramBundle\Telegram\Command\WarmUpper:
+    public: true
+    arguments:
+    - '@zored.telegram.bot.api'
+    - '@zored.telegram.client.api'
+
   Zored\TelegramBundle\Telegram\Command\MessageSender:
     public: true
     arguments:
@@ -28,3 +34,16 @@ services:
   zored.telegram.client.api:
     class: Zored\Telegram\TelegramApi
     factory: zored.telegram.client.api.factory:create
+
+  # Bot API:
+  zored.telegram.bot.config.factory:
+    class: Zored\Telegram\Madeline\Config\Builder\EnvConfigFactory
+    calls:
+    - [setType, [!php/const Zored\Telegram\Madeline\Config\Auth\AuthType::BOT]]
+  zored.telegram.bot.api.factory:
+    class: Zored\Telegram\Factory\TelegramApiFactory
+    calls:
+    - [setConfigFactory, ['@zored.telegram.bot.config.factory']]
+  zored.telegram.bot.api:
+    class: Zored\Telegram\TelegramApi
+    factory: zored.telegram.bot.api.factory:create

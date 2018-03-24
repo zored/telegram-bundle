@@ -11,7 +11,7 @@ use Zored\TelegramBundle\Telegram\Command\MessageSender;
 
 final class SendMessage extends ConsoleCommand
 {
-    protected static $defaultName = 'telegram:client:send:message';
+    protected static $defaultName = 'send-message';
 
     /**
      * {@inheritdoc}
@@ -28,9 +28,14 @@ final class SendMessage extends ConsoleCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getContainer()->get(MessageSender::class)->send(
+        $this->getMessageSender()->send(
             $input->getArgument('peer'),
             $input->getArgument('message')
         );
+    }
+
+    protected function getMessageSender(): MessageSender
+    {
+        return $this->getContainer()->get(MessageSender::class);
     }
 }

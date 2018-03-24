@@ -6,7 +6,9 @@ namespace Zored\TelegramBundle\Telegram\Command;
 
 use Zored\Telegram\Entity\Control\Message\MarkdownMessage;
 use Zored\Telegram\Entity\Control\Peer\PeerFactory;
+use Zored\Telegram\Entity\Control\Peer\PeerInterface;
 use Zored\Telegram\TelegramApiInterface;
+use Zored\TelegramBundle\Telegram\Command\Exception\PeerMessageSendException;
 
 final class MessageSender
 {
@@ -21,14 +23,26 @@ final class MessageSender
     }
 
     /**
-     * @throws \Zored\TelegramBundle\Telegram\Command\Exception\PeerMessageSendException
+     * @throws PeerMessageSendException
      */
     public function send(string $search, string $messageContent): void
     {
+        $this->api->sendMessage(
+            $this->findPeer($search),
+            new MarkdownMessage($messageContent)
+        );
+    }
+
+    /**
+     * @throws PeerMessageSendException
+     */
+    private function findPeer(string $search): PeerInterface
+    {
         $dialogs = $this->api->getDialogs();
-        $this->api->sendMessage(PeerFactory::createByEntity(
+
+        return PeerFactory::createByEntity(
             $dialogs->findUserByFullName($search) ??
             $dialogs->findChatByTitle($search)
-        ), new MarkdownMessage($messageContent));
+        );
     }
 }

@@ -9,21 +9,22 @@
 
 Symfony 4 bundle for [Telegram API](https://github.com/zored/telegram).
 
-
 ## Install
 ```bash
 composer require zored/telegram-bundle
 ```
 
-
-## Usage
-```
-# Available commands:
-bin/console
-
-# Send message example:
-bin/console telegram:client:send:message bob 'Hello, Bob!'
-```
-
-## TODO
-- Increase coverage.
+## CLI usage
+- Install bundle globally.
+    ```bash
+    composer global require zored/telegram-bundle
+    ```
+- Ensure that your `PATH` looks at composer bin root (see `composer global --help` for details).
+- Set-up environment variables:
+    ```bash
+    export TELEGRAM_PHONE='' TELEGRAM_API_ID='' TELEGRAM_API_HASH=''
+    ```
+- Run:
+    ```
+    telegram send-message
+    ```

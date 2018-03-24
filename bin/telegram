@@ -19,7 +19,12 @@ if (!class_exists(Application::class)) {
 }
 
 if (!isset($_SERVER['APP_ENV'])) {
-    (new Dotenv())->load(__DIR__ . '/../.env');
+    (new Dotenv())->load(...array_filter([
+        __DIR__ . '/../.env.dist',
+        __DIR__ . '/../.env',
+    ], function (string $path): bool {
+        return file_exists($path);
+    }));
 }
 
 $input = new ArgvInput();
