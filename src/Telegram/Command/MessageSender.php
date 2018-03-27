@@ -8,9 +8,8 @@ use Zored\Telegram\Entity\Control\Message\MarkdownMessage;
 use Zored\Telegram\Entity\Control\Peer\PeerFactory;
 use Zored\Telegram\Entity\Control\Peer\PeerInterface;
 use Zored\Telegram\TelegramApiInterface;
-use Zored\TelegramBundle\Telegram\Command\Exception\PeerMessageSendException;
 
-final class MessageSender
+class MessageSender
 {
     /**
      * @var TelegramApiInterface
@@ -22,9 +21,6 @@ final class MessageSender
         $this->api = $api;
     }
 
-    /**
-     * @throws PeerMessageSendException
-     */
     public function send(string $search, string $messageContent): void
     {
         $this->api->sendMessage(
@@ -33,9 +29,6 @@ final class MessageSender
         );
     }
 
-    /**
-     * @throws PeerMessageSendException
-     */
     private function findPeer(string $search): PeerInterface
     {
         $dialogs = $this->api->getDialogs();

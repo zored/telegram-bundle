@@ -13,7 +13,7 @@ use Zored\Telegram\Entity\User as EntityUser;
 use Zored\Telegram\TelegramApiInterface;
 use Zored\TelegramBundle\Telegram\Command\MessageSender;
 
-final class MessageSenderTest extends TestCase
+class MessageSenderTest extends TestCase
 {
     private $api;
 

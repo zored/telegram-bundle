@@ -7,7 +7,7 @@ namespace Zored\TelegramBundle\Telegram\Command;
 use Zored\Telegram\TelegramApiInterface;
 use Zored\TelegramBundle\Telegram\Command\Exception\WarmUpException;
 
-final class WarmUpper
+class WarmUpper
 {
     /**
      * @var TelegramApiInterface[]

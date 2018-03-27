@@ -9,9 +9,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zored\TelegramBundle\Telegram\Command\MessageSender;
 
-final class SendMessage extends ConsoleCommand
+class SendMessage extends AbstractConsoleCommand
 {
-    protected static $defaultName = 'send-message';
+    protected static $defaultName = 'tg:client:message';
 
     /**
      * {@inheritdoc}

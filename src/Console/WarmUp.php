@@ -8,9 +8,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zored\TelegramBundle\Telegram\Command\WarmUpper;
 
-final class WarmUp extends ConsoleCommand
+class WarmUp extends AbstractConsoleCommand
 {
-    protected static $defaultName = 'warmup';
+    protected static $defaultName = 'tg:warmup';
 
     protected function configure(): void
     {

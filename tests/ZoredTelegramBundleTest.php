@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Zored\TelegramBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ChildDefinition;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Zored\TelegramBundle\ZoredTelegramBundle;
 
-final class ZoredTelegramBundleTest extends TestCase
+class ZoredTelegramBundleTest extends TestCase
 {
     /**
      * @var ZoredTelegramBundle
@@ -18,6 +20,18 @@ final class ZoredTelegramBundleTest extends TestCase
     {
         $this->bundle->getContainerExtension();
         $this->assertTrue(true, 'doesNotPerformAssertions()');
+    }
+
+    public function testBuild(): void
+    {
+        $container = $this->createMock(ContainerBuilder::class);
+        $container
+            ->expects($this->once())
+            ->method('registerForAutoconfiguration')
+            ->with()
+            ->willReturn($this->createMock(ChildDefinition::class));
+        $container->expects($this->once())->method('addCompilerPass');
+        $this->bundle->build($container);
     }
 
     /**

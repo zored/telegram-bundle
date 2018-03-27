@@ -11,11 +11,18 @@ services:
     resource: '../../*'
     exclude: '../../{Entity,Migrations,Tests}'
 
+  # TODO: move to `commands`:
   Zored\TelegramBundle\Telegram\Command\WarmUpper:
     public: true
     arguments:
     - '@zored.telegram.bot.api'
     - '@zored.telegram.client.api'
+
+  Zored\TelegramBundle\Telegram\Command\BotListener:
+    public: true
+    arguments:
+      $bot: '@zored.telegram.bot'
+      $handlers: []
 
   Zored\TelegramBundle\Telegram\Command\MessageSender:
     public: true
@@ -32,8 +39,9 @@ services:
     calls:
     - [setConfigFactory, ['@zored.telegram.client.config.factory']]
   zored.telegram.client.api:
-    class: Zored\Telegram\TelegramApi
+    class: Zored\Telegram\TelegramApiInterface
     factory: zored.telegram.client.api.factory:create
+
 
   # Bot API:
   zored.telegram.bot.config.factory:
@@ -44,6 +52,17 @@ services:
     class: Zored\Telegram\Factory\TelegramApiFactory
     calls:
     - [setConfigFactory, ['@zored.telegram.bot.config.factory']]
+    - [setSerializer, ['@Zored\Telegram\Serializer\Jms\JmsSerializer']]
   zored.telegram.bot.api:
-    class: Zored\Telegram\TelegramApi
+    class: Zored\Telegram\TelegramApiInterface
     factory: zored.telegram.bot.api.factory:create
+  zored.telegram.bot.factory:
+    class: Zored\Telegram\Bot\Factory\BotFactory
+    calls:
+    - [setTelegramApiFactory, ['@zored.telegram.bot.api.factory']]
+  zored.telegram.bot:
+    class: Zored\Telegram\Bot\BotInterface
+    factory: zored.telegram.bot.factory:create
+
+  Zored\TelegramBundle\Telegram\Bot\Handler\PingPongHandler:
+    arguments: {$api: '@zored.telegram.bot.api'}
