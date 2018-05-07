@@ -25,6 +25,11 @@ composer require zored/telegram-bundle
     export TELEGRAM_PHONE='' TELEGRAM_API_ID='' TELEGRAM_API_HASH=''
     ```
 - Run:
-    ```
-    telegram send-message
-    ```
+    - Message to your contact:
+        ```bash
+        telegram tg:client:message 'Ivan' '**Hello there!**'
+        ```
+    - Start bot and react to `/ping example` commands:
+        ```bash
+        telegram tg:bot:listen
+        ```
